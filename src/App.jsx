@@ -1,78 +1,61 @@
-// import React, { useState } from "react";
-// import { format } from "date-fns";
-// import styles from "./App.module.css";
+import styles from './app.module.css';
+import data from './data.json';
 
-function App() {
-	const [value, setValue] = useState("");
-	const [list, setList] = useState([]);
-	const [error, setError] = useState("");
+export const App = () => {
+	// Можно задать 2 состояния — steps и activeIndex
 
-	const isValueVaild = value.length >= 2 ? true : false;
+	// И определить 3 обработчика: Клик назад, Клик вперед, Начать сначала
 
-	const onInputButtonClick = () => {
-		const userInput = prompt("Введите значение:");
-		const promptValue = userInput;
-		if (promptValue.length <= 2) {
-			setError("Введенное значение должно содержать минимум 3 символа");
-			setValue("");
-		} else {
-			setError("");
-			setValue(promptValue);
-		}
-	};
-
-	const onAddButtonClick = () => {
-		if (isValueVaild) {
-			const id = Date.now();
-			const now = new Date();
-			const formatted = format(now, "dd.MM.yyyy HH:mm:ss");
-			const updatedList = [...list, { id, value, formatted }];
-			setList(updatedList);
-			setValue("");
-			setError("");
-		}
-	};
+	// И 2 переменных-флага — находимся ли мы на первом шаге, и находимся ли на последнем
 
 	return (
-		<div className={styles.app}>
-			<h1 className={styles["pageh-eading"]}>Ввод значения</h1>
-			<p className={styles["no-margin-text"]}>
-				Текущее значение <code>value</code>: "
-				<output className={styles["current-value"]}>{value}</output>"
-			</p>
-			{/* {error !== "" && <div className={styles.error}>{error}</div>} */}
-			{error && <div className={styles.error}>{error}</div>}
-			<div className={styles["buttons-container"]}>
-				<button className={styles.button} onClick={onInputButtonClick}>
-					Ввести новое
-				</button>
-				<button
-					className={styles.button}
-					disabled={!isValueVaild}
-					onClick={onAddButtonClick}
-				>
-					Добавить в список
-				</button>
-			</div>
-			<div className={styles["list-container"]}>
-				<h2 className={styles["list-heading"]}>Список:</h2>
-
-				{list.length === 0 ? (
-					<p className={styles["no-margin-text"]}>
-						Нет добавленных элементов
-					</p>
-				) : (
-					<ul className={styles.list}>
-						{list.map((item) => (
-							<li key={item.id} className={styles["list-item"]}>
-								{item.value + " " + item.formatted}
-							</li>
-						))}
+		<div className={styles.container}>
+			<div className={styles.card}>
+				<h1>Инструкция по готовке пельменей</h1>
+				<div className={styles.steps}>
+					<div className={styles['steps-content']}>
+						{/* Для получения активного контента использйте steps и activeIndex */}
+						Контент соответственный шагу. Сейчас активен шаг 3
+					</div>
+					<ul className={styles['steps-list']}>
+						{/* Выводите <li> с помощью массива steps и метода map(), подставляя в разметку нужные значения и классы */}
+						<li className={styles['steps-item'] + ' ' + styles.done}>
+							{/* Для того, чтобы вычислить необходимый класс используйте активный индекс, текущий индекс, а также тернарные операторы */}
+							<button className={styles['steps-item-button']}>1</button>
+							{/* При клике на кнопку установка выбранного шага в качестве активного */}
+							Шаг 1
+						</li>
+						<li className={styles['steps-item'] + ' ' + styles.done}>
+							<button className={styles['steps-item-button']}>2</button>
+							Шаг 2
+						</li>
+						<li
+							className={
+								styles['steps-item'] +
+								' ' +
+								styles.done +
+								' ' +
+								styles.active
+							}
+						>
+							<button className={styles['steps-item-button']}>3</button>
+							Шаг 3
+						</li>
+						<li className={styles['steps-item']}>
+							<button className={styles['steps-item-button']}>4</button>
+							Шаг 4
+						</li>
 					</ul>
-				)}
+					<div className={styles['buttons-container']}>
+						<button className={styles.button}>Назад</button>
+						<button className={styles.button}>
+							Далее
+							{/* "Начать сначала", можно сделать этой же кнопкой, просто подменять обработчик и текст в зависимости от условия */}
+							{/* Или заменять всю кнопку в зависимости от условия */}
+						</button>
+					</div>
+				</div>
 			</div>
 		</div>
 	);
-}
-
-export default App;
+};
