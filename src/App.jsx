@@ -1,98 +1,104 @@
 import { useState } from "react";
 import styles from "./app.module.css";
-import data from "./data.json";
 
 export const App = () => {
-	// const [steps, setSteps] = useState(data);
-	const steps = data;
-	const [activeIndex, setActiveIndex] = useState(0);
+	const NUMS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, "-", "+", "=", "C"];
+	const [operand1, setOperand1] = useState("");
+	const [operand2, setOperand2] = useState("");
+	const [operator, setOperator] = useState(null);
+	const [isFistNumber, setIsFistNumber] = useState(true);
+	const [result, setResult] = useState(null);
+	const [isCalculated, setIsCalculated] = useState(false);
 
-	const totalSteps = steps.length;
-	const isFirstStep = activeIndex === 0;
-	const isLastStep = activeIndex === totalSteps - 1;
-
-	const onBackClick = () => {
-		if (!isFirstStep) {
-			setActiveIndex((prev) => prev - 1);
+	const onButtonClick = (value) => {
+		if (isFistNumber) {
+			setOperand1((prev) => prev + value);
+		} else if (!isFistNumber) {
+			setOperand2((prev) => prev + value);
 		}
 	};
 
-	const onForwardClick = () => {
-		if (!isLastStep) {
-			setActiveIndex((prev) => prev + 1);
+	const onClearClick = () => {
+		setOperand1("");
+		setOperand2("");
+		setOperator(null);
+		setIsFistNumber(true);
+		setResult(null);
+		setIsCalculated(false);
+	};
+
+	const onOperatorClick = (value) => {
+		if (operand1 === "") return; // не даст ввести оператор без числа
+		setOperator(value);
+		setIsFistNumber(false);
+	};
+
+	const onEqualsClick = () => {
+		if (operand1 !== null && operand2 !== null && operator) {
+			const res = calculate(Number(operand1), Number(operand2), operator);
+			setResult(res);
+			setIsCalculated(true);
 		}
 	};
 
-	const onStartClick = () => {
-		setActiveIndex(0);
+	const calculate = (num1, num2, operator) => {
+		switch (operator) {
+			case "+":
+				return num1 + num2;
+			case "-":
+				return num1 - num2;
+			// default:
+			// 	return num2;
+		}
 	};
-
-const photo = () =>
-	isFirstStep ? (
-		<img className={styles.photo} src="./pelmeni.jpg" alt="Пельмени" />
-	) : (
-		<div className={styles["steps-content"]}>
-			<h2>{steps[activeIndex].title}</h2>
-			{steps[activeIndex] && steps[activeIndex].content}
-		</div>
-	);
 
 	return (
 		<div className={styles.container}>
-			<div className={styles.card}>
-				<h1>Инструкция по готовке пельменей</h1>
-				<div className={styles.steps}>
-					{photo()}
-					<ul className={styles["steps-list"]}>
-						{steps.map((step, index) => {
-							const isActive = index === activeIndex;
-							const isDone = index <= activeIndex;
-
-							return (
-								<li
-									key={index}
-									className={
-										styles["steps-item"] +
-										(isDone ? ` ${styles.done}` : "") +
-										(isActive ? ` ${styles.active}` : "")
-									}
-								>
-									<button
-										className={styles["steps-item-button"]}
-										onClick={() => setActiveIndex(index)}
-									>
-										{index + 1}
-									</button>
-									{`Шаг ${index + 1}`}
-								</li>
-							);
-						})}
-					</ul>
-					<div className={styles["buttons-container"]}>
-						<button
-							className={styles.button}
-							disabled={isFirstStep}
-							onClick={onBackClick}
-						>
-							Назад
-						</button>
-						{isLastStep ? (
+			<h1 className={styles.title}>CALCULATOR</h1>
+			<div className={styles.display}>
+				{result !== null
+					? `${operand1} ${operator} ${operand2} = ${result}`
+					: `${operand1 ?? ""} ${operator ?? ""} ${operand2 ?? ""}`}
+			</div>
+			<div className={styles.buttonContainer}>
+				<ul className={styles.buttons}>
+					{NUMS.slice(0, 9).map((num, index) => {
+						return (
 							<button
 								className={styles.button}
-								onClick={onStartClick}
+								onClick={() => onButtonClick(num)}
+								key={index}
 							>
-								Начать сначала
+								{num}
 							</button>
-						) : (
+						);
+					})}
+				</ul>
+			</div>
+			<div className={styles.buttonContainer}>
+				<ul className={styles.buttons}>
+					{NUMS.slice(10, 14).map((num, index) => {
+						//Функция-обработчик по значению кнопки
+						const handleClick = () => {
+							if (num === "C") {
+								onClearClick(); // очищает
+							} else if (num === "=") {
+								onEqualsClick(); // считает
+							} else if (num === "+" || num === "-") {
+								onOperatorClick(num); // передаёт оператор
+							}
+						};
+						return (
 							<button
 								className={styles.button}
-								onClick={onForwardClick}
+								onClick={handleClick}
+								key={index}
 							>
-								Далее
+								{num}
 							</button>
-						)}
-					</div>
-				</div>
+						);
+					})}
+				</ul>
 			</div>
 		</div>
 	);
