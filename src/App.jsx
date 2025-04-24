@@ -52,6 +52,16 @@ export const App = () => {
 		}
 	};
 
+	const handleClick = (value) => {
+		if (value === "C") {
+			onClearClick(); // очищает
+		} else if (value === "=") {
+			onEqualsClick(); // считает
+		} else if (value === "+" || value === "-") {
+			onOperatorClick(value); // передаёт оператор
+		}
+	};
+
 	return (
 		<div className={styles.container}>
 			<h1 className={styles.title}>CALCULATOR</h1>
@@ -79,19 +89,20 @@ export const App = () => {
 				<ul className={styles.buttons}>
 					{NUMS.slice(10, 14).map((num, index) => {
 						//Функция-обработчик по значению кнопки
-						const handleClick = () => {
-							if (num === "C") {
-								onClearClick(); // очищает
-							} else if (num === "=") {
-								onEqualsClick(); // считает
-							} else if (num === "+" || num === "-") {
-								onOperatorClick(num); // передаёт оператор
-							}
-						};
+						// const handleClick = () => {
+						// 	if (num === "C") {
+						// 		onClearClick(); // очищает
+						// 	} else if (num === "=") {
+						// 		onEqualsClick(); // считает
+						// 	} else if (num === "+" || num === "-") {
+						// 		onOperatorClick(num); // передаёт оператор
+						// 	}
+						// };
 						return (
 							<button
 								className={styles.button}
-								onClick={handleClick}
+								// onClick={handleClick}
+								onClick={() => handleClick(num)}
 								key={index}
 							>
 								{num}
