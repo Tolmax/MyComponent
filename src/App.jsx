@@ -29,7 +29,7 @@ export const App = () => {
 
 const photo = () =>
 	isFirstStep ? (
-		<img src="./pelmeni.jpg" alt="Пельмени" />
+		<img className={styles.photo} src="./pelmeni.jpg" alt="Пельмени" />
 	) : (
 		<div className={styles["steps-content"]}>
 			<h2>{steps[activeIndex].title}</h2>
@@ -42,10 +42,6 @@ const photo = () =>
 			<div className={styles.card}>
 				<h1>Инструкция по готовке пельменей</h1>
 				<div className={styles.steps}>
-					{/* <div className={styles["steps-content"]}>
-						<h2>{steps[activeIndex].title}</h2>
-						{steps[activeIndex] && steps[activeIndex].content}
-					</div> */}
 					{photo()}
 					<ul className={styles["steps-list"]}>
 						{steps.map((step, index) => {
