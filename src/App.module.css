@@ -1,8 +1,13 @@
 .container {
+	display: flex;
+	justify-content: space-around;
+	flex-direction: column;
+	align-items: center;
 	text-align: center;
-	max-width: 950px;
 	margin: 0 auto;
-	padding: 0 5px
+	padding: 50px;
+	width: 305px;
+	font-family: Arial, sans-serif;
 }
 
 .display {
@@ -10,75 +15,57 @@
 	border-radius: 8px;
 	padding: 20px;
 	margin: 20px auto;
-	width: 256px;
-	background: #f2f2f2;
-	font-size: 24px;
+	width: 260px;
+	height: 32px;
+	background: #f2f2f2e4;
+	font-size: 32px;
 	text-align: right;
 	transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.buttons-container {
+.displayResult {
+		background: #b6cc55e4;
+}
+
+.buttonContainer {
 	display: flex;
 	justify-content: center;
-	gap: 10px;
-}
-
-.button {
-	padding: 0.5em 0.75em;
-	background-color: hsl(var(--accent-color-hue), var(--accent-color-saturation), 92%);
-	font-size: 18px;
-	border: none;
-	transition: background-color 0.15s ease;
-}
-
-.button:hover {
-	background-color: hsl(var(--accent-color-hue), var(--accent-color-saturation), 87%);
-}
-
-.button:disabled {
-	background-color: var(--disabled-color);
-}
-
-.steps-content {
-	min-height: 320px;
-	border: 2px solid hsl(var(--accent-color-hue), var(--accent-color-saturation), 92%);
-	border-radius: 15px;
-	padding: 15px 20px;
-}
-
-.steps-list {
-	list-style: none;
-	margin: 30px 0;
-	padding: 0;
-	display: flex;
-	justify-content: space-between;
-	flex-wrap: wrap;
-	gap: 15px;
-}
-
-.steps-item {
-	display: flex;
 	flex-direction: column;
-	align-items: center;
-	flex: 1 1 0px;
-	font-size: 0.75rem;
+	gap: 25px;
 }
 
-.steps-item-button {
+.digitButton {
+	margin: 5px;
+	padding: 10px 15px;
+	font-size: 24px;
+	color: aliceblue;
 	cursor: pointer;
-	border-radius: 50%;
-	padding: 0.75rem 1rem;
-	background: #cccccc;
-	border: none;
-	margin-bottom: 0.25rem;
+	width: 50px;
+	background-color: chocolate;
 }
 
-.steps-item.active .steps-item-button,
-.steps-item.done .steps-item-button {
-	background: hsl(var(--accent-color-hue), var(--accent-color-saturation), 92%);
+.digitButton:hover {
+	background-color: rgb(210, 105, 30, 0.5);
 }
 
-.steps-item.active,
-.steps-item.active .steps-item-button {
-	font-weight: bold;
+.buttons {
+	padding: 0;
+}
+
+/* .buttons:disabled {
+	background-color: rgb(0, 0, 0);
+} */
+
+.operationButton {
+	margin: 5px;
+	padding: 10px 15px;
+	font-size: 24px;
+	color: aliceblue;
+	cursor: pointer;
+	width: 50px;
+	background-color: #666;
+}
+
+.operationButton:hover {
+	background-color: rgb(102, 102, 102, 0.5);
 }

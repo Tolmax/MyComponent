@@ -52,30 +52,31 @@ export const App = () => {
 		}
 	};
 
-	const handleClick = (value) => {
-		if (value === "C") {
-			onClearClick(); // очищает
-		} else if (value === "=") {
-			onEqualsClick(); // считает
-		} else if (value === "+" || value === "-") {
-			onOperatorClick(value); // передаёт оператор
-		}
+	const onHandleClick = (value) => {
+		const isOperator = value === "+" || value === "-";
+		const isEquals = value === "=";
+		const isClear = value === "C";
+		if (isClear) onClearClick();
+		else if (isEquals) onEqualsClick();
+		else if (isOperator) onOperatorClick(value);
 	};
 
 	return (
 		<div className={styles.container}>
-			<h1 className={styles.title}>CALCULATOR</h1>
-			<div className={styles.display}>
+			<h1 className={styles.title}>КАЛЬКУЛЯТОР</h1>
+			<div
+				className={`${styles.display} ${isCalculated ? styles.displayResult : ""}`}
+			>
 				{result !== null
 					? `${operand1} ${operator} ${operand2} = ${result}`
 					: `${operand1 ?? ""} ${operator ?? ""} ${operand2 ?? ""}`}
 			</div>
 			<div className={styles.buttonContainer}>
 				<ul className={styles.buttons}>
-					{NUMS.slice(0, 9).map((num, index) => {
+					{NUMS.slice(0, 10).map((num, index) => {
 						return (
 							<button
-								className={styles.button}
+								className={styles.digitButton}
 								onClick={() => onButtonClick(num)}
 								key={index}
 							>
@@ -84,25 +85,14 @@ export const App = () => {
 						);
 					})}
 				</ul>
-			</div>
-			<div className={styles.buttonContainer}>
 				<ul className={styles.buttons}>
 					{NUMS.slice(10, 14).map((num, index) => {
-						//Функция-обработчик по значению кнопки
-						// const handleClick = () => {
-						// 	if (num === "C") {
-						// 		onClearClick(); // очищает
-						// 	} else if (num === "=") {
-						// 		onEqualsClick(); // считает
-						// 	} else if (num === "+" || num === "-") {
-						// 		onOperatorClick(num); // передаёт оператор
-						// 	}
-						// };
+						const isOperator = num === "+" || num === "-";
 						return (
 							<button
-								className={styles.button}
-								// onClick={handleClick}
-								onClick={() => handleClick(num)}
+								className={styles.operationButton}
+								onClick={() => onHandleClick(num)}
+								disabled={isCalculated && isOperator}
 								key={index}
 							>
 								{num}
