@@ -1,0 +1,35 @@
+.button {
+	display: inline-block;
+	padding: 16px 42px 17px;
+	border-radius: 8px;
+	background-color: yellow;
+	font-weight: 700;
+	font-size: 22px;
+	color: blue;
+	margin: 25px auto;
+	border: 2px solid black;
+
+	transition:
+		background-color 0.2s ease-in,
+		color 0.2s ease-in,
+		border 0.2s ease-in;
+
+	-webkit-text-stroke: 1px rgba(0, 0, 0, 0.25);
+	/* text-stroke: 1px #000; */
+	text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.button:hover {
+	background-color: yellowgreen;
+}
+
+/* .button:focus {
+	background-color: yellowgreen;
+}
+
+.button:active {
+	position: relative;
+	top: 1px;
+	background-color: yellowgreen;
+	color: blue;
+} */
